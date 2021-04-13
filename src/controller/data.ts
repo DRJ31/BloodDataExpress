@@ -6,7 +6,7 @@ namespace DataHandler {
     export function fetchData(req: express.Request, res: express.Response) {
         if (!req.session.username) {
             res.status(403);
-            res.send({ message: "Please login!" });
+            res.send({ message: "请先登录" });
             return;
         }
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
@@ -14,7 +14,7 @@ namespace DataHandler {
         connection.query("SELECT * FROM blood ORDER BY date DESC", (err, rows, cols) => {
             if (err) {
                 res.status(404);
-                res.send({ message: "Empty table" });
+                res.send({ message: "无数据" });
                 return;
             }
             res.send({ data: rows });

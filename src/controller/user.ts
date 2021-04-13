@@ -5,7 +5,7 @@ import { DB_CONFIG } from "../config";
 export function sessionHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
     if (!req.session.username) {
         res.status(403);
-        res.send({ message: "Please Login!" });
+        res.send({ message: "请先登录" });
         return;
     }
     next();
@@ -24,16 +24,16 @@ namespace UserHandler {
         connection.query("SELECT password FROM user WHERE username = ? ", [username], (err, rows, cols) => {
             if (err) {
                 res.status(403);
-                res.send({ message: "Invalid username or password!" });
+                res.send({ message: "用户名或密码错误" });
                 return;
             }
             if (rows[0] && rows[0].password == password) {
                 req.session.username = username;
-                res.send({ message: "Login succeeded!", username });
+                res.send({ message: "登录成功", username });
             }
             else {
                 res.status(403);
-                res.send({ message: "Invalid username or password!" });
+                res.send({ message: "用户名或密码错误" });
             }
             connection.end();
         })
