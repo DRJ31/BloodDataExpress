@@ -18,11 +18,11 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run: openssl aes-256-cbc -d -pbkdf2 -in config.ts.enc -out src/config.ts -k $DECRYPT_KEY
-      - run: CI=false yarn build
+      - run: yarn build
       - run: |
-          tar Jcvf build.tar.xz build/
+          tar Jcvf ../project.tar.xz --exclude node_modules --exclude .idea --exclude .git .
           ssh-keyscan -t rsa cloud.drjchn.com >> ~/.ssh/known_hosts
-          scp build.tar.xz ubuntu@cloud.drjchn.com:~
+          scp ../project.tar.xz ubuntu@cloud.drjchn.com:~
           ssh ubuntu@cloud.drjchn.com < deploy.sh
 workflows:
   version: 2
