@@ -3,7 +3,7 @@ import mysql = require("mysql");
 import { DB_CONFIG } from "../config";
 
 export function sessionHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
-    if (!req.session.username) {
+    if (!req.session.user) {
         res.status(403);
         res.send({ message: "请先登录" });
         return;
@@ -28,7 +28,7 @@ namespace UserHandler {
                 return;
             }
             if (rows[0] && rows[0].password == password) {
-                req.session.username = username;
+                req.session.user = { username, uid: rows[0].id };
                 res.send({ message: "登录成功", username });
             }
             else {

@@ -4,7 +4,7 @@ import { DB_CONFIG } from "../config";
 
 namespace DataHandler {
     export function fetchData(req: express.Request, res: express.Response) {
-        if (!req.session.username) {
+        if (!req.session.user) {
             res.status(403);
             res.send({ message: "请先登录" });
             return;

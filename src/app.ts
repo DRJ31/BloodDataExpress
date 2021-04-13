@@ -5,10 +5,16 @@ import cors = require("cors");
 import router from "./router";
 import { SESS_SECRET } from "./config";
 
+// Define session user's structure
+interface User {
+    uid: number;
+    username: string;
+}
+
 // Setup session format
 declare module "express-session" {
     interface Session {
-        username: string;
+        user: User;
     }
 }
 
