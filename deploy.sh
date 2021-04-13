@@ -6,4 +6,4 @@ tar xvf project.tar.xz -C application/blood
 cd application/blood
 export PATH=/usr/local/node/bin:$PATH
 yarn install
-pm2 start build/app.js
+pm2 restart build/app.js
