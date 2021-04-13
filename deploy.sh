@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf application/blood
+mkdir application/blood
 tar xvf project.tar.xz -C application/blood
 cd application/blood
 yarn install
