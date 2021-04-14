@@ -20,7 +20,7 @@ declare module "express-session" {
 
 // Setup express
 const app: express.Application = express();
-const PORT = process.env.PORT || 5000;
+const PORT: number = parseInt(process.env.PORT) || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -25,7 +25,7 @@ namespace DataHandler {
         }
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
         connection.connect();
-        connection.query("SELECT * FROM blood ORDER BY date DESC", (err, rows, cols) => {
+        connection.query("SELECT * FROM blood ORDER BY date DESC", (err, rows) => {
             if (err) {
                 res.status(404);
                 res.send({ message: "无数据" });
@@ -39,7 +39,7 @@ namespace DataHandler {
     export function insertData(req: express.Request, res: express.Response) {
         const { data } = req.body;
 
-        let bloodData: BloodData = data;
+        const bloodData: BloodData = data;
         bloodData.uid = req.session.user.uid;
         bloodData.date = dayjs(bloodData.date).format("YYYY-MM-DD");
         if (!bloodData.reticulocyte) {
@@ -51,7 +51,7 @@ namespace DataHandler {
 
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
         connection.connect();
-        connection.query("SELECT * FROM blood WHERE date = DATE(?) AND uid = ?", [bloodData.date, bloodData.uid], (err, rows, cols) => {
+        connection.query("SELECT * FROM blood WHERE date = DATE(?) AND uid = ?", [bloodData.date, bloodData.uid], (err, rows) => {
             if (err) {
                 res.status(400);
                 res.send({ message: "系统错误" });
