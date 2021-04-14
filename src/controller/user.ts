@@ -12,6 +12,20 @@ export function sessionHandler(req: express.Request, res: express.Response, next
 }
 
 namespace UserHandler {
+    export function logout(req: express.Request, res: express.Response) {
+        const { username } = req.body;
+        if (req.session.user && req.session.user.username == username) {
+            req.session.destroy(err => {
+                if (err) console.log(err);
+                res.send({ message: "已退出登录" });
+            });
+        }
+        else {
+            res.status(403);
+            res.send({ message: "尚未登录" });
+        }
+    }
+
     export function login(req: express.Request, res: express.Response) {
         if (!req.body.username || !req.body.password) {
             res.status(400);
