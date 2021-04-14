@@ -14,6 +14,7 @@
     "@types/express-session": "^1.17.3",
     "@types/mysql": "^2.15.18",
     "cors": "^2.8.5",
+    "dayjs": "^1.10.4",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mysql": "^2.18.1",

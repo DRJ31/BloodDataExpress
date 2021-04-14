@@ -21,7 +21,7 @@ namespace UserHandler {
         const { username, password } = req.body;
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
         connection.connect();
-        connection.query("SELECT password FROM user WHERE username = ? ", [username], (err, rows, cols) => {
+        connection.query("SELECT id, password FROM user WHERE username = ? ", [username], (err, rows, cols) => {
             if (err) {
                 res.status(403);
                 res.send({ message: "用户名或密码错误" });
