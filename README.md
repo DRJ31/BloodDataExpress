@@ -37,7 +37,7 @@ Then, you can develop the project with `yarn start` and build the proejct with `
 - blood
     - id: int
     - uid: int
-    - leukocyte
+    - leukocyte: double
     - hemoglobin: double
     - platelets: double
     - monocyte: double
