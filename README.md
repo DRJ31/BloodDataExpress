@@ -1,5 +1,10 @@
 # Blood Data Management System | Express
 
+<a href="https://app.circleci.com/pipelines/github/DRJ31/BloodDataExpress"><img alt="CircleCI" src="https://img.shields.io/circleci/build/github/DRJ31/BloodDataExpress?logo=circleci"></a>
+<a href="https://github.com/DRJ31/BloodDataExpress"><img alt="GitHub" src="https://img.shields.io/github/license/DRJ31/BloodDataExpress"></a>
+<a href="https://www.typescriptlang.org"><img alt="GitHub top language" src="https://img.shields.io/github/languages/top/DRJ31/BloodDataExpress?label=TypeScript"></a>
+
+
 The backend of [DRJ31/BloodDataReact](https://github.com/DRJ31/BloodDataReact).The main introduction of the project can be found in the README of that project.
 
 ## Installation
