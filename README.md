@@ -8,9 +8,22 @@
 The backend of [DRJ31/BloodDataReact](https://github.com/DRJ31/BloodDataReact).The main introduction of the project can be found in the README of that project.
 
 ## Installation
-The project use **MySQL** as database, and **yarn** as package management tool. Therefore, you should ensure that the 2 packages are installed. Then you can install packages with 
+The project use **MySQL** as database, and **yarn** as package management tool. Therefore, you should ensure that the 2 packages are installed. 
+### Install Dependencies
 ```bash
 yarn install
+```
+### Create encrypted files
+```typescript
+/* Path: src/config.ts */
+export const SESS_SECRET: string = "secret";
+
+export const DB_CONFIG = {
+    host: 'localhost',
+    user: 'username',
+    password: 'password',
+    database: 'database'
+}
 ```
 Then, you can develop the project with `yarn start` and build the proejct with `yarn build`
 
