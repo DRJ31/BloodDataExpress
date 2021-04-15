@@ -17,12 +17,33 @@ interface BloodData {
 }
 
 namespace DataHandler {
+    export function fetchDateData(req: express.Request, res: express.Response) {
+        const { date } = req.body;
+        const { uid } = req.session.user;
+
+        const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
+        connection.connect();
+        connection.query("SELECT * FROM blood WHERE date = DATE(?) AND uid = ?", [date, uid], (err, rows) => {
+            if (err) {
+                res.status(404);
+                res.send({ message: "无数据" });
+                return;
+            }
+            if (rows.length === 0) {
+                res.send({ result: null });
+            }
+            else {
+                const result = rows[0];
+                const removeList = ["date", "id", "uid"];
+                for (let key of removeList) {
+                    delete result[key];
+                }
+                res.send({ result });
+            }
+        });
+    }
+
     export function fetchData(req: express.Request, res: express.Response) {
-        if (!req.session.user) {
-            res.status(403);
-            res.send({ message: "请先登录" });
-            return;
-        }
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
         connection.connect();
         connection.query("SELECT * FROM blood ORDER BY date DESC", (err, rows) => {
@@ -59,21 +80,33 @@ namespace DataHandler {
                 return;
             }
             if (rows.length > 0) {
-                res.status(403);
-                res.send({ message: "日期已存在" });
-                connection.end();
-                return;
-            }
-            connection.query("INSERT INTO blood SET ?", bloodData, (e) => {
-                if (e) {
-                    res.status(400);
-                    res.send({ message: "添加失败" });
+                connection.query("UPDATE blood SET ? WHERE date = DATE(?) AND uid = ?", [
+                    bloodData,
+                    bloodData.date,
+                    bloodData.uid
+                ], (e) => {
+                    if (e) {
+                        res.status(400);
+                        res.send({ message: e.sql });
+                        connection.end();
+                        return;
+                    }
+                    res.send({ message: "更改成功" });
                     connection.end();
-                    return;
-                }
-                res.send({ message: "添加成功" });
-                connection.end();
-            });
+                });
+            }
+            else {
+                connection.query("INSERT INTO blood SET ?", bloodData, (e) => {
+                    if (e) {
+                        res.status(400);
+                        res.send({ message: "添加失败" });
+                        connection.end();
+                        return;
+                    }
+                    res.send({ message: "添加成功" });
+                    connection.end();
+                });
+            }
         });
     }
 }

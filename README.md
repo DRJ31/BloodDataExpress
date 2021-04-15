@@ -10,6 +10,7 @@ The backend of [DRJ31/BloodDataReact](https://github.com/DRJ31/BloodDataReact).T
 ## Installation
 The project use **MySQL** as database, and **yarn** as package management tool. Therefore, you should ensure that the 2 packages are installed. 
 ### Install Dependencies
+Go to the root of project and
 ```bash
 yarn install
 ```

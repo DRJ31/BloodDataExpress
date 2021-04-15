@@ -6,6 +6,8 @@ import { sessionHandler } from "./controller/user";
 export default function (app: express.Application) {
     app.post('/api/login', UserHandler.login);
     app.get('/api/data', sessionHandler,DataHandler.fetchData);
+    app.post('/api/fetch', sessionHandler, DataHandler.fetchDateData);
     app.post('/api/insert', sessionHandler, DataHandler.insertData);
     app.post('/api/logout', UserHandler.logout);
+    app.post('/api/check', sessionHandler, UserHandler.checkPassed);
 }

@@ -5,25 +5,22 @@ import { DB_CONFIG } from "../config";
 export function sessionHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
     if (!req.session.user) {
         res.status(403);
-        res.send({ message: "请先登录" });
+        res.send({ message: "尚未登录" });
         return;
     }
     next();
 }
 
 namespace UserHandler {
+    export function checkPassed(req: express.Request, res: express.Response) {
+        res.send({ message: "Passed" });
+    }
+
     export function logout(req: express.Request, res: express.Response) {
-        const { username } = req.body;
-        if (req.session.user && req.session.user.username == username) {
-            req.session.destroy(err => {
-                if (err) console.log(err);
-                res.send({ message: "已退出登录" });
-            });
-        }
-        else {
-            res.status(403);
-            res.send({ message: "尚未登录" });
-        }
+        req.session.destroy(err => {
+            if (err) console.log(err);
+            res.send({ message: "已退出登录" });
+        });
     }
 
     export function login(req: express.Request, res: express.Response) {
