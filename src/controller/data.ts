@@ -1,6 +1,6 @@
 import express = require("express");
 import mysql = require("mysql");
-import { DB_CONFIG } from "../config";
+import {COOKIE_OPTION, DB_CONFIG} from "../config";
 import dayjs = require("dayjs");
 
 interface BloodData {
@@ -30,7 +30,7 @@ namespace DataHandler {
                 return;
             }
             if (rows.length === 0) {
-                res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
+                res.cookie("username", req.session.user.username, COOKIE_OPTION)
                 res.send({ result: null });
             }
             else {
@@ -39,7 +39,7 @@ namespace DataHandler {
                 for (let key of removeList) {
                     delete result[key];
                 }
-                res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
+                res.cookie("username", req.session.user.username, COOKIE_OPTION)
                 res.send({ result });
             }
         });
@@ -54,7 +54,7 @@ namespace DataHandler {
                 res.send({ message: "无数据" });
                 return;
             }
-            res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
+            res.cookie("username", req.session.user.username, COOKIE_OPTION)
             res.send({ data: rows });
             connection.end();
         });
@@ -94,7 +94,7 @@ namespace DataHandler {
                         connection.end();
                         return;
                     }
-                    res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
+                    res.cookie("username", req.session.user.username, COOKIE_OPTION)
                     res.send({ message: "更改成功" });
                     connection.end();
                 });
@@ -107,7 +107,7 @@ namespace DataHandler {
                         connection.end();
                         return;
                     }
-                    res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
+                    res.cookie("username", req.session.user.username, COOKIE_OPTION)
                     res.send({ message: "添加成功" });
                     connection.end();
                 });

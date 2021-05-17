@@ -1,6 +1,6 @@
 import express = require("express");
 import mysql = require("mysql");
-import { DB_CONFIG } from "../config";
+import {COOKIE_OPTION, DB_CONFIG} from "../config";
 
 export function sessionHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
     if (!req.session.user) {
@@ -41,7 +41,7 @@ namespace UserHandler {
             }
             if (rows[0] && rows[0].password == password) {
                 req.session.user = { username, uid: rows[0].id };
-                res.cookie("username", username, { maxAge: 60 * 60 * 1000 })
+                res.cookie("username", username, COOKIE_OPTION)
                 res.send({ message: "登录成功", username });
             }
             else {
