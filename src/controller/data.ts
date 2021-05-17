@@ -30,6 +30,7 @@ namespace DataHandler {
                 return;
             }
             if (rows.length === 0) {
+                res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
                 res.send({ result: null });
             }
             else {
@@ -38,6 +39,7 @@ namespace DataHandler {
                 for (let key of removeList) {
                     delete result[key];
                 }
+                res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
                 res.send({ result });
             }
         });
@@ -52,6 +54,7 @@ namespace DataHandler {
                 res.send({ message: "无数据" });
                 return;
             }
+            res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
             res.send({ data: rows });
             connection.end();
         });
@@ -91,6 +94,7 @@ namespace DataHandler {
                         connection.end();
                         return;
                     }
+                    res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
                     res.send({ message: "更改成功" });
                     connection.end();
                 });
@@ -103,6 +107,7 @@ namespace DataHandler {
                         connection.end();
                         return;
                     }
+                    res.cookie("username", req.session.user.username, { maxAge: 60 * 60 * 1000 })
                     res.send({ message: "添加成功" });
                     connection.end();
                 });

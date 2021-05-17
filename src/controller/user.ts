@@ -19,6 +19,7 @@ namespace UserHandler {
     export function logout(req: express.Request, res: express.Response) {
         req.session.destroy(err => {
             if (err) console.log(err);
+            res.cookie("username", "", { expires: new Date() })
             res.send({ message: "已退出登录" });
         });
     }
@@ -40,6 +41,7 @@ namespace UserHandler {
             }
             if (rows[0] && rows[0].password == password) {
                 req.session.user = { username, uid: rows[0].id };
+                res.cookie("username", username, { maxAge: 60 * 60 * 1000 })
                 res.send({ message: "登录成功", username });
             }
             else {
