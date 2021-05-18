@@ -16,9 +16,9 @@ interface BloodData {
     remark: string;
 }
 
-namespace DataHandler {
-    export function fetchDateData(req: express.Request, res: express.Response) {
-        const { date } = req.body;
+namespace BloodHandler {
+    export function fetchDateBlood(req: express.Request, res: express.Response) {
+        const { date } = req.query;
         const { uid } = req.session.user;
 
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
@@ -45,7 +45,7 @@ namespace DataHandler {
         });
     }
 
-    export function fetchData(req: express.Request, res: express.Response) {
+    export function fetchBlood(req: express.Request, res: express.Response) {
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
         connection.connect();
         connection.query("SELECT * FROM blood ORDER BY date DESC", (err, rows) => {
@@ -60,7 +60,7 @@ namespace DataHandler {
         });
     }
 
-    export function insertData(req: express.Request, res: express.Response) {
+    export function insertBlood(req: express.Request, res: express.Response) {
         const { data } = req.body;
 
         const bloodData: BloodData = data;
@@ -116,4 +116,4 @@ namespace DataHandler {
     }
 }
 
-export default DataHandler;
+export default BloodHandler;

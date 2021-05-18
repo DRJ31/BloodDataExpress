@@ -5,6 +5,7 @@ import {COOKIE_OPTION, DB_CONFIG} from "../config";
 export function sessionHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
     if (!req.session.user) {
         res.status(403);
+        res.cookie("username", "", {maxAge: 0})
         res.send({ message: "尚未登录" });
         return;
     }
@@ -19,7 +20,7 @@ namespace UserHandler {
     export function logout(req: express.Request, res: express.Response) {
         req.session.destroy(err => {
             if (err) console.log(err);
-            res.cookie("username", "", { expires: new Date() })
+            res.cookie("username", "", { maxAge: 0 })
             res.send({ message: "已退出登录" });
         });
     }
