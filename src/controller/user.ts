@@ -4,7 +4,7 @@ import {COOKIE_OPTION, DB_CONFIG, SAME_SITE} from "../config";
 
 export function sessionHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
     if (!req.session.user) {
-        res.status(403);
+        res.status(401);
         res.cookie("username", "", { maxAge: 0, sameSite: SAME_SITE })
         res.send({ message: "尚未登录" });
         return;
@@ -36,7 +36,7 @@ namespace UserHandler {
         connection.connect();
         connection.query("SELECT id, password FROM user WHERE username = ? ", [username], (err, rows) => {
             if (err) {
-                res.status(403);
+                res.status(401);
                 res.send({ message: "用户名或密码错误" });
                 return;
             }
@@ -46,7 +46,7 @@ namespace UserHandler {
                 res.send({ message: "登录成功", username });
             }
             else {
-                res.status(403);
+                res.status(401);
                 res.send({ message: "用户名或密码错误" });
             }
             connection.end();

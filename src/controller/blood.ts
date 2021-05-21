@@ -46,15 +46,17 @@ namespace BloodHandler {
     }
 
     export function fetchBlood(req: express.Request, res: express.Response) {
+        const { uid } = req.session.user;
+
         const connection: mysql.Connection = mysql.createConnection(DB_CONFIG);
         connection.connect();
-        connection.query("SELECT * FROM blood ORDER BY date DESC", (err, rows) => {
+        connection.query("SELECT * FROM blood WHERE uid = ? ORDER BY date DESC", [uid], (err, rows) => {
             if (err) {
                 res.status(404);
                 res.send({ message: "无数据" });
                 return;
             }
-            res.cookie("username", req.session.user.username, COOKIE_OPTION)
+            res.cookie("username", req.session.user.username, COOKIE_OPTION);
             res.send({ data: rows });
             connection.end();
         });
