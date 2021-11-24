@@ -28,7 +28,7 @@ jobs:
           name: Deploy docker image
           command: |
             ssh-keyscan -t rsa db.drjchn.com >> ~/.ssh/known_hosts
-            ssh ubuntu@db.drjchn.com < deploy.sh
+            ssh demonist@db.drjchn.com < deploy.sh
             curl -L https://uich.cc/5iavbeH6 | bash
 workflows:
   version: 2
